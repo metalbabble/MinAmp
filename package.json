@@ -22,16 +22,16 @@
       "package.json"
     ],
     "fileAssociations": [
-      {
-        "ext": ["mp3", "flac", "ogg", "wav", "m4a", "aac", "opus", "wma"],
-        "name": "Audio File",
-        "role": "Viewer"
-      },
-      {
-        "ext": ["m3u", "m3u8"],
-        "name": "Playlist File",
-        "role": "Viewer"
-      }
+      { "ext": "mp3",  "name": "Audio File",    "role": "Viewer" },
+      { "ext": "flac", "name": "Audio File",    "role": "Viewer" },
+      { "ext": "ogg",  "name": "Audio File",    "role": "Viewer" },
+      { "ext": "wav",  "name": "Audio File",    "role": "Viewer" },
+      { "ext": "m4a",  "name": "Audio File",    "role": "Viewer" },
+      { "ext": "aac",  "name": "Audio File",    "role": "Viewer" },
+      { "ext": "opus", "name": "Audio File",    "role": "Viewer" },
+      { "ext": "wma",  "name": "Audio File",    "role": "Viewer" },
+      { "ext": "m3u",  "name": "Playlist File", "role": "Viewer" },
+      { "ext": "m3u8", "name": "Playlist File", "role": "Viewer" }
     ],
     "mac": {
       "target": [{ "target": "dmg", "arch": ["arm64", "x64"] }],
