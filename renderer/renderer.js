@@ -262,9 +262,11 @@ function showOpenMenu(anchorEl) {
   menu.id = 'open-menu'
 
   const rect = anchorEl.getBoundingClientRect()
+  // If the anchor is inside a hidden panel, rect dimensions are zero — fall back to bottom-right
+  const bottomOffset = rect.height > 0 ? document.body.clientHeight - rect.top + 4 : 14
   Object.assign(menu.style, {
     position:     'fixed',
-    bottom:       `${document.body.clientHeight - rect.top + 4}px`,
+    bottom:       `${bottomOffset}px`,
     right:        '10px',
     background:   '#252525',
     border:       '1px solid #444',
