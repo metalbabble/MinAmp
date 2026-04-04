@@ -2,12 +2,64 @@
   "name": "minamp",
   "version": "0.1.0",
   "description": "Lightweight cross-platform MP3 player",
+  "author": "metalbabble.com",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build:mac":   "electron-builder --mac",
+    "build:win":   "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:all":   "electron-builder --mac --win --linux"
+  },
+  "build": {
+    "appId": "com.minamp.app",
+    "productName": "MinAmp",
+    "icon": "icon.png",
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "fileAssociations": [
+      {
+        "ext": ["mp3", "flac", "ogg", "wav", "m4a", "aac", "opus", "wma"],
+        "name": "Audio File",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["m3u", "m3u8"],
+        "name": "Playlist File",
+        "role": "Viewer"
+      }
+    ],
+    "mac": {
+      "target": [{ "target": "dmg", "arch": ["arm64", "x64"] }],
+      "category": "public.app-category.music"
+    },
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }]
+    },
+    "linux": {
+      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "category": "Audio"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "dmg": {
+      "contents": [
+        { "x": 130, "y": 220 },
+        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+      ]
+    }
   },
   "dependencies": {
-    "electron": "^41.1.1",
     "music-metadata": "^11.12.3"
+  },
+  "devDependencies": {
+    "electron": "^41.1.1",
+    "electron-builder": "^26.8.1"
   }
 }

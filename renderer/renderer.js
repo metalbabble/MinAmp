@@ -543,6 +543,10 @@ window.minamp.onOsOpenFile(async filePath => {
     await loadFiles(tracks, { type: 'm3u', path: filePath })
   } else if (AUDIO_EXTS.has(ext)) {
     await loadFiles([filePath], { type: 'files', paths: [filePath] })
+  } else {
+    // assume directory
+    const tracks = await window.minamp.readDirectory(filePath)
+    if (tracks.length) await loadFiles(tracks, { type: 'folder', path: filePath })
   }
 })
 

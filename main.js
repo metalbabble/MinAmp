@@ -8,6 +8,7 @@ const WINDOW_WIDTH = 420
 
 let win
 let mmParseFile = null
+let pendingOpenPath = null  // queued before window is ready
 
 async function getParseFile() {
   if (!mmParseFile) {
@@ -73,9 +74,20 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  // Windows / Linux: file/folder passed as CLI argument
+  if (process.platform !== 'darwin') {
+    const args = process.argv.slice(app.isPackaged ? 1 : 2)
+    const pathArg = args.find(a => !a.startsWith('-'))
+    if (pathArg) pendingOpenPath = pathArg
+  }
+
   createWindow()
   win.webContents.on('did-finish-load', () => {
     win.webContents.send('initial-state', loadState())
+    if (pendingOpenPath) {
+      win.webContents.send('os-open-file', pendingOpenPath)
+      pendingOpenPath = null
+    }
   })
 })
 
@@ -87,10 +99,14 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
-// macOS: file opened via Finder / dock drop
+// macOS: file/folder opened via Finder / dock drop
 app.on('open-file', (event, filePath) => {
   event.preventDefault()
-  if (win) win.webContents.send('os-open-file', filePath)
+  if (win) {
+    win.webContents.send('os-open-file', filePath)
+  } else {
+    pendingOpenPath = filePath  // app not ready yet; deliver after window loads
+  }
 })
 
 // IPC -------------------------------------------------------------------
