@@ -8,8 +8,10 @@
     "start": "electron .",
     "build:mac":   "electron-builder --mac",
     "build:win":   "electron-builder --win",
-    "build:linux": "electron-builder --linux",
-    "build:all":   "electron-builder --mac --win --linux"
+    "build:linux":     "electron-builder --linux --x64",
+    "build:linux:arm": "electron-builder --linux --arm64",
+    "build:linux:all": "electron-builder --linux --x64 --arm64",
+    "build:all":       "electron-builder --mac --win --linux --x64 --arm64"
   },
   "build": {
     "appId": "com.minamp.app",
@@ -41,7 +43,7 @@
       "target": [{ "target": "nsis", "arch": ["x64"] }]
     },
     "linux": {
-      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "target": [{ "target": "AppImage", "arch": ["x64", "arm64"] }],
       "category": "Audio"
     },
     "nsis": {
