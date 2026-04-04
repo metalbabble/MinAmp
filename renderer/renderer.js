@@ -459,6 +459,21 @@ btnShuffle.addEventListener('click', () => {
   persistState()
 })
 
+window.minamp.onMediaKey(async (action) => {
+  if (action === 'playpause') {
+    if (state.playlist.length === 0) return
+    if (audio.paused) audio.play().catch(() => {})
+    else audio.pause()
+  } else if (action === 'previous') {
+    if (audio.currentTime > 3) { audio.currentTime = 0; return }
+    const idx = getPrevIndex(state.currentIndex)
+    if (idx !== null) await playTrack(idx)
+  } else if (action === 'next') {
+    const idx = getNextIndex(state.currentIndex)
+    if (idx !== null) await playTrack(idx)
+  }
+})
+
 btnLoop.addEventListener('click', () => {
   state.loop = !state.loop
   btnLoop.classList.toggle('active', state.loop)

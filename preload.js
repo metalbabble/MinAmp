@@ -13,4 +13,5 @@ contextBridge.exposeInMainWorld('minamp', {
   onInitialState: (cb) => ipcRenderer.on('initial-state', (_, s) => cb(s)),
   onMenuAction:   (cb) => ipcRenderer.on('menu-action',   (_, a) => cb(a)),
   onOsOpenFile:   (cb) => ipcRenderer.on('os-open-file',  (_, p) => cb(p)),
+  onMediaKey:     (cb) => ipcRenderer.on('media-key',     (_, a) => cb(a)),
 })

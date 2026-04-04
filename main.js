@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, Menu, globalShortcut } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
@@ -82,6 +82,11 @@ app.whenReady().then(() => {
   }
 
   createWindow()
+
+  globalShortcut.register('MediaPlayPause',     () => win.webContents.send('media-key', 'playpause'))
+  globalShortcut.register('MediaNextTrack',     () => win.webContents.send('media-key', 'next'))
+  globalShortcut.register('MediaPreviousTrack', () => win.webContents.send('media-key', 'previous'))
+
   win.webContents.on('did-finish-load', () => {
     win.webContents.send('initial-state', loadState())
     if (pendingOpenPath) {
@@ -90,6 +95,8 @@ app.whenReady().then(() => {
     }
   })
 })
+
+app.on('will-quit', () => globalShortcut.unregisterAll())
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
