@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; media-src 'self' file:; img-src 'self' data: file:; style-src 'self' 'unsafe-inline';">
+  <title>MinAmp</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Custom title bar -->
+  <div id="titlebar">
+    <span id="app-title">MINAMP</span>
+    <div id="window-controls">
+      <button id="btn-minimize" title="Minimize">&#8211;</button>
+      <button id="btn-close" title="Close">&#10005;</button>
+    </div>
+  </div>
+
+  <!-- Album art + track info -->
+  <div id="main-panel">
+    <div id="art-container">
+      <img id="album-art" alt="">
+      <div id="art-placeholder"></div>
+    </div>
+    <div id="track-info">
+      <div id="track-title">No file loaded</div>
+      <div id="track-artist"></div>
+      <div id="track-album"></div>
+    </div>
+  </div>
+
+  <!-- Progress / seek -->
+  <div id="progress-container">
+    <span id="time-current">0:00</span>
+    <div id="progress-bar">
+      <div id="progress-fill"></div>
+    </div>
+    <span id="time-total">0:00</span>
+  </div>
+
+  <!-- Playback controls -->
+  <div id="controls">
+    <button id="btn-prev"      class="ctrl-btn"           title="Previous">&#9664;&#9664;</button>
+    <button id="btn-playpause" class="ctrl-btn play-btn"  title="Play / Pause">&#9654;</button>
+    <button id="btn-next"      class="ctrl-btn"           title="Next">&#9654;&#9654;</button>
+    <div id="volume-container">
+      <span id="vol-icon">&#128266;</span>
+      <input id="volume-slider" type="range" min="0" max="1" step="0.02" value="1">
+    </div>
+    <button id="btn-toggle-list" class="ctrl-btn icon-btn" title="Toggle playlist">&#9776;</button>
+  </div>
+
+  <!-- Playlist panel (revealed when expanded) -->
+  <div id="playlist-panel">
+    <div id="playlist-toolbar">
+      <button id="btn-shuffle" class="pill-btn" title="Shuffle">&#8646; Shuffle</button>
+      <button id="btn-loop"    class="pill-btn" title="Loop">&#8635; Loop</button>
+      <button id="btn-open"    class="pill-btn open-pill" title="Open…">&#128193; Open&#8230;</button>
+    </div>
+    <ul id="playlist-list"></ul>
+  </div>
+
+  <!-- Drag-and-drop overlay -->
+  <div id="drop-overlay">
+    <span>Drop folder, playlist, or audio files</span>
+  </div>
+
+  <audio id="audio"></audio>
+  <script src="renderer.js"></script>
+</body>
+</html>

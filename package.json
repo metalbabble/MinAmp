@@ -1,0 +1,13 @@
+{
+  "name": "minamp",
+  "version": "0.1.0",
+  "description": "Lightweight cross-platform MP3 player",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^41.1.1",
+    "music-metadata": "^11.12.3"
+  }
+}
