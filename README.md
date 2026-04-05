@@ -80,6 +80,14 @@ Cross-compilation works for most targets but macOS `.dmg` and `.icns` icon gener
 
 The app icon is `icon.png` in the project root. electron-builder converts it automatically to `.icns` (macOS), `.ico` (Windows), and `.png` (Linux) during the build. Use a square image of at least 512×512px for best results.
 
+### GitHub Release
+
+GitHub workflow to build Mac, Linux, and Windows versions is set up using [.github/workflows/release.yml](.github/workflows/release.yml)
+```
+git tag v0.1.0  # or whatever version #
+git push origin main --tags
+```
+
 ## Project Structure
 
 ```text
