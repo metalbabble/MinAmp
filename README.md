@@ -4,7 +4,7 @@ A lightweight, cross-platform audio player built with Electron. Inspired by the 
 
 ![screenshot.png](screenshot.png)
 
-▶️ Releases: [Download WinAmp](https://github.com/metalbabble/MinAmp/releases) for Mac, Windows, and Linux.
+▶️ Releases: [Download MinAmp](https://github.com/metalbabble/MinAmp/releases) for Mac, Windows, and Linux.
 
 ## Features
 
