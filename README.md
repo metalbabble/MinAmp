@@ -4,6 +4,8 @@ A lightweight, cross-platform audio player built with Electron. Inspired by the 
 
 ![screenshot.png](screenshot.png)
 
+Releases: [Download WinAmp](https://github.com/metalbabble/MinAmp/releases) for Mac, Windows, and Linux.
+
 ## Features
 
 - Plays MP3, FLAC, OGG, WAV, M4A, AAC, Opus, and WMA files
@@ -80,7 +82,7 @@ Cross-compilation works for most targets but macOS `.dmg` and `.icns` icon gener
 
 The app icon is `icon.png` in the project root. electron-builder converts it automatically to `.icns` (macOS), `.ico` (Windows), and `.png` (Linux) during the build. Use a square image of at least 512×512px for best results.
 
-### GitHub Release
+### CI
 
 GitHub workflow to build Mac, Linux, and Windows versions is set up using [.github/workflows/release.yml](.github/workflows/release.yml)
 ```
