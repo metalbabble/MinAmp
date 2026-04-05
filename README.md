@@ -59,7 +59,7 @@ Packaged builds are produced with [electron-builder](https://www.electron.build/
 ```bash
 npm run build:mac     # → dist/  .dmg  (arm64 + x64)
 npm run build:win     # → dist/  .exe  NSIS installer (x64)
-npm run build:linux   # → dist/  .AppImage (x64)
+npm run build:linux   # → dist/  .AppImage (x64 by default or arm64 with: npm run build:linux:arm)
 npm run build:all     # all three
 ```
 
