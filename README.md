@@ -4,6 +4,8 @@ A lightweight, cross-platform audio player built with Electron. Inspired by the 
 
 ![screenshot.png](screenshot.png)
 
+▶️ Releases: [Download MinAmp](https://github.com/metalbabble/MinAmp/releases) for Mac, Windows, and Linux.
+
 ## Features
 
 - Plays MP3, FLAC, OGG, WAV, M4A, AAC, Opus, and WMA files
@@ -57,10 +59,11 @@ Click **☰** to expand the window and reveal the track list. From here you can:
 Packaged builds are produced with [electron-builder](https://www.electron.build/).
 
 ```bash
-npm run build:mac     # → dist/  .dmg  (arm64 + x64)
-npm run build:win     # → dist/  .exe  NSIS installer (x64)
-npm run build:linux   # → dist/  .AppImage (x64)
-npm run build:all     # all three
+npm run build:mac       # → dist/  .dmg  (arm64 + x64)
+npm run build:win       # → dist/  .exe  NSIS installer (x64)
+npm run build:linux     # → dist/  .AppImage (x64)
+npm run build:linux:arm # → dist/  .AppImage (arm64)
+npm run build:all       # all three
 ```
 
 The resulting files land in `dist/` and are double-clickable installers/bundles. Each build registers MinAmp as an "open with" handler for audio files (mp3, flac, ogg, wav, m4a, aac, opus, wma) and playlists (m3u, m3u8). Dragging any of those — or a folder — onto the app icon launches MinAmp and loads it immediately.
@@ -79,6 +82,14 @@ Cross-compilation works for most targets but macOS `.dmg` and `.icns` icon gener
 
 The app icon is `icon.png` in the project root. electron-builder converts it automatically to `.icns` (macOS), `.ico` (Windows), and `.png` (Linux) during the build. Use a square image of at least 512×512px for best results.
 
+### CI
+
+GitHub workflow to build Mac, Linux, and Windows versions is set up using [.github/workflows/release.yml](.github/workflows/release.yml)
+```
+git tag v0.1.0  # or whatever version #
+git push origin main --tags
+```
+
 ## Project Structure
 
 ```text
@@ -90,6 +101,9 @@ MinAmp/
     ├── renderer.js  # Playback logic, UI state, drag-and-drop
     └── styles.css   # Dark theme
 ```
+
+## More Info
+Version history / change log available here: [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 
