@@ -57,10 +57,11 @@ Click **☰** to expand the window and reveal the track list. From here you can:
 Packaged builds are produced with [electron-builder](https://www.electron.build/).
 
 ```bash
-npm run build:mac     # → dist/  .dmg  (arm64 + x64)
-npm run build:win     # → dist/  .exe  NSIS installer (x64)
-npm run build:linux   # → dist/  .AppImage (x64 by default or arm64 with: npm run build:linux:arm)
-npm run build:all     # all three
+npm run build:mac       # → dist/  .dmg  (arm64 + x64)
+npm run build:win       # → dist/  .exe  NSIS installer (x64)
+npm run build:linux     # → dist/  .AppImage (x64)
+npm run build:linux:arm # → dist/  .AppImage (arm64)
+npm run build:all       # all three
 ```
 
 The resulting files land in `dist/` and are double-clickable installers/bundles. Each build registers MinAmp as an "open with" handler for audio files (mp3, flac, ogg, wav, m4a, aac, opus, wma) and playlists (m3u, m3u8). Dragging any of those — or a folder — onto the app icon launches MinAmp and loads it immediately.
@@ -90,6 +91,9 @@ MinAmp/
     ├── renderer.js  # Playback logic, UI state, drag-and-drop
     └── styles.css   # Dark theme
 ```
+
+## More Info
+Version history / change log available here: [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 
