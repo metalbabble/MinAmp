@@ -139,12 +139,20 @@ ipcMain.handle('open-dialog', async (_, type) => {
 const AUDIO_EXTS = new Set(['.mp3', '.flac', '.ogg', '.wav', '.m4a', '.aac', '.opus', '.wma'])
 
 ipcMain.handle('read-directory', (_, dirPath) => {
-  try {
-    return fs.readdirSync(dirPath)
-      .filter(f => AUDIO_EXTS.has(path.extname(f).toLowerCase()))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
-      .map(f => path.join(dirPath, f))
-  } catch { return [] }
+  const results = []
+  const walk = (dir) => {
+    let entries
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }) }
+    catch { return }
+    entries.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }))
+    for (const entry of entries) {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) walk(full)
+      else if (AUDIO_EXTS.has(path.extname(entry.name).toLowerCase())) results.push(full)
+    }
+  }
+  walk(dirPath)
+  return results
 })
 
 ipcMain.handle('parse-m3u', (_, filePath) => {
