@@ -80,4 +80,11 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: dist/**
+          body: |
+            # Download MinAmp
+            - macOS w/Apple Silicon: MinAmp-0.1.1-arm64.dmg
+            - macOS w/Intel: MinAmp-0.1.1.dmg
+            - Linux on x86 use: MinAmp-0.1.1.AppImage
+            - Linux on ARM use: MinAmp-0.1.1-arm64.AppImage
+            - Windows x86/64 use: MinAmp.Setup.0.1.1.exe
           generate_release_notes: true
