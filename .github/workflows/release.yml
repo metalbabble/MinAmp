@@ -7,14 +7,7 @@ on:
 
 jobs:
   build-mac:
-    strategy:
-      matrix:
-        include:
-          - runner: macos-13
-            arch: x64
-          - runner: macos-latest
-            arch: arm64
-    runs-on: ${{ matrix.runner }}
+    runs-on: macos-latest
     permissions:
       contents: write
     steps:
@@ -23,12 +16,15 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
-      - run: npx electron-builder --mac --${{ matrix.arch }}
+      - run: npx electron-builder --mac --arm64
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npx electron-builder --mac --x64
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
-          name: mac-dist-${{ matrix.arch }}
+          name: mac-dist
           path: dist/*.dmg
 
   build-win:
