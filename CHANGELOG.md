@@ -18,3 +18,8 @@ Initial release.
 - Remembers last source, track position, volume, shuffle/loop state between sessions
 - Custom frameless window with minimize/close controls
 - Builds for macOS (DMG arm64+x64), Windows (NSIS x64), Linux (AppImage x64+arm64)
+
+## [0.1.2] — 2026-04-06
+
+- Folder scan now also checks sub-folders recurisvely
+- Improved media key support
