@@ -77,7 +77,7 @@ jobs:
         with:
           files: dist/**
           body: |
-            # Download MinAmp
+            ## Download MinAmp
             - macOS w/Apple Silicon use: MinAmp-x.x.x-arm64.dmg
             - macOS w/Intel use: MinAmp-x.x.x.dmg
             - Linux on x86 use: MinAmp-x.x.x.AppImage
