@@ -5,6 +5,10 @@ Increment the patch version in `package.json` with every change (e.g. `0.1.0` �
 
 ---
 
+## [0.1.6] — 2026-04-10
+
+- macOS: closing the main window now quits the app instead of leaving it running in the Dock
+
 ## [0.1.5] — 2026-04-10
 
 - Fixed drag-and-drop of files and folders onto the app window (Electron 32+ removed `File.prototype.path`; now uses `webUtils.getPathForFile`)
