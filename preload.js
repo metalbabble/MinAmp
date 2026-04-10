@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('minamp', {
+  getVersion:     ()     => ipcRenderer.invoke('get-version'),
   openDialog:     (type) => ipcRenderer.invoke('open-dialog', type),
   readDirectory:  (p)    => ipcRenderer.invoke('read-directory', p),
   parseM3u:       (p)    => ipcRenderer.invoke('parse-m3u', p),

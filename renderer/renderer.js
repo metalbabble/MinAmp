@@ -147,7 +147,7 @@ function updateNowPlaying(track) {
     artPlaceholder.style.display = 'none'
   } else {
     albumArtImg.style.display    = 'none'
-    artPlaceholder.style.display = 'block'
+    artPlaceholder.style.display = 'flex'
   }
 }
 
@@ -489,6 +489,52 @@ btnToggleList.addEventListener('click', () => {
 })
 
 btnOpen.addEventListener('click', () => showOpenMenu(btnOpen))
+
+// ── About dialog ──────────────────────────────────────────────────────────────
+async function showAboutDialog() {
+  const overlay = document.createElement('div')
+  Object.assign(overlay.style, {
+    position:        'fixed',
+    inset:           '0',
+    background:      'rgba(0,0,0,0.6)',
+    display:         'flex',
+    alignItems:      'center',
+    justifyContent:  'center',
+    zIndex:          '9999',
+  })
+
+  const box = document.createElement('div')
+  Object.assign(box.style, {
+    background:   '#1e1e1e',
+    border:       '1px solid #444',
+    borderRadius: '8px',
+    padding:      '28px 36px',
+    textAlign:    'center',
+    color:        '#fff',
+    fontFamily:   'inherit',
+    minWidth:     '200px',
+  })
+
+  const title = document.createElement('div')
+  title.textContent = 'MinAmp'
+  Object.assign(title.style, { fontSize: '22px', fontWeight: 'bold', letterSpacing: '2px', marginBottom: '6px' })
+
+  const tagline = document.createElement('div')
+  tagline.textContent = 'by metalbabble.com'
+  Object.assign(tagline.style, { fontSize: '12px', color: '#aaa', marginBottom: '14px' })
+
+  const version = document.createElement('div')
+  version.textContent = `v${await window.minamp.getVersion()}`
+  Object.assign(version.style, { fontSize: '11px', color: '#666' })
+
+  box.append(title, tagline, version)
+  overlay.appendChild(box)
+  document.body.appendChild(overlay)
+
+  overlay.addEventListener('click', () => overlay.remove())
+}
+
+document.getElementById('art-container').addEventListener('dblclick', showAboutDialog)
 
 // ── Window chrome ─────────────────────────────────────────────────────────────
 document.getElementById('btn-minimize').addEventListener('click', () => window.minamp.minimizeWindow())

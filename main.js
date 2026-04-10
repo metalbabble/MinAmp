@@ -192,6 +192,8 @@ ipcMain.handle('get-metadata', async (_, filePath) => {
   }
 })
 
+ipcMain.handle('get-version', () => app.getVersion())
+
 ipcMain.on('save-state', (_, state) => saveState(state))
 
 ipcMain.on('set-expanded', (_, expanded) => {
