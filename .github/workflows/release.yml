@@ -69,18 +69,27 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
           path: dist/
+      - name: Extract changelog entry
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          NOTES=$(awk "/^## \[$VERSION\]/{found=1; next} found && /^## \[/{exit} found{print}" CHANGELOG.md)
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       - uses: softprops/action-gh-release@v2
         with:
           files: dist/**
           body: |
+            ${{ steps.changelog.outputs.notes }}
             ## Download MinAmp
             - macOS w/Apple Silicon use: MinAmp-x.x.x-arm64.dmg
             - macOS w/Intel use: MinAmp-x.x.x.dmg
             - Linux on x86 use: MinAmp-x.x.x.AppImage
             - Linux on ARM use: MinAmp-x.x.x-arm64.AppImage
             - Windows x86/64 use: MinAmp.Setup.x.x.x.exe
-          generate_release_notes: true
