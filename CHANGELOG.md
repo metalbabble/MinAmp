@@ -5,6 +5,13 @@ Increment the patch version in `package.json` with every change (e.g. `0.1.0` �
 
 ---
 
+## [0.1.5] — 2026-04-10
+
+- Fixed drag-and-drop of files and folders onto the app window (Electron 32+ removed `File.prototype.path`; now uses `webUtils.getPathForFile`)
+- Fixed folder detection on drag-drop to use filesystem check (`fs.stat`) instead of fragile type/size heuristic
+- Fixed macOS dock drop and Windows CLI: multiple files/folders dropped at once are now all queued and delivered
+- Fixed Windows/Linux: multiple file paths passed as CLI arguments are now all opened (previously only the first was used)
+
 ## [0.1.4] — 2026-04-10
 
 - Double-clicking the album art (or placeholder) opens an About dialog showing the app name, tagline, and version

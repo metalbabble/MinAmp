@@ -566,21 +566,23 @@ document.addEventListener('drop', async e => {
   let source = null
 
   for (const f of files) {
+    const filePath = window.minamp.getPathForFile(f)
+    if (!filePath) continue
+
     const ext = '.' + (f.name.split('.').pop() || '').toLowerCase()
 
     if (M3U_EXTS.has(ext)) {
-      const parsed = await window.minamp.parseM3u(f.path)
+      const parsed = await window.minamp.parseM3u(filePath)
       tracks.push(...parsed)
-      source = { type: 'm3u', path: f.path }
+      source = { type: 'm3u', path: filePath }
 
     } else if (AUDIO_EXTS.has(ext)) {
-      tracks.push(f.path)
+      tracks.push(filePath)
 
-    } else if (f.type === '' && f.size === 0) {
-      // Likely a folder (Electron exposes folder drops this way)
-      const dirTracks = await window.minamp.readDirectory(f.path)
+    } else if (await window.minamp.isDirectory(filePath)) {
+      const dirTracks = await window.minamp.readDirectory(filePath)
       tracks.push(...dirTracks)
-      source = { type: 'folder', path: f.path }
+      source = { type: 'folder', path: filePath }
     }
   }
 

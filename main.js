@@ -8,7 +8,7 @@ const WINDOW_WIDTH = 420
 
 let win
 let mmParseFile = null
-let pendingOpenPath = null  // queued before window is ready
+let pendingOpenPaths = []  // queued before window is ready
 
 async function getParseFile() {
   if (!mmParseFile) {
@@ -74,11 +74,10 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  // Windows / Linux: file/folder passed as CLI argument
+  // Windows / Linux: file/folder(s) passed as CLI arguments
   if (process.platform !== 'darwin') {
     const args = process.argv.slice(app.isPackaged ? 1 : 2)
-    const pathArg = args.find(a => !a.startsWith('-'))
-    if (pathArg) pendingOpenPath = pathArg
+    pendingOpenPaths = args.filter(a => !a.startsWith('-'))
   }
 
   createWindow()
@@ -89,10 +88,10 @@ app.whenReady().then(() => {
 
   win.webContents.on('did-finish-load', () => {
     win.webContents.send('initial-state', loadState())
-    if (pendingOpenPath) {
-      win.webContents.send('os-open-file', pendingOpenPath)
-      pendingOpenPath = null
+    for (const p of pendingOpenPaths) {
+      win.webContents.send('os-open-file', p)
     }
+    pendingOpenPaths = []
   })
 })
 
@@ -112,7 +111,7 @@ app.on('open-file', (event, filePath) => {
   if (win) {
     win.webContents.send('os-open-file', filePath)
   } else {
-    pendingOpenPath = filePath  // app not ready yet; deliver after window loads
+    pendingOpenPaths.push(filePath)  // app not ready yet; deliver after window loads
   }
 })
 
@@ -193,6 +192,10 @@ ipcMain.handle('get-metadata', async (_, filePath) => {
 })
 
 ipcMain.handle('get-version', () => app.getVersion())
+
+ipcMain.handle('is-directory', (_, p) => {
+  try { return fs.statSync(p).isDirectory() } catch { return false }
+})
 
 ipcMain.on('save-state', (_, state) => saveState(state))
 
