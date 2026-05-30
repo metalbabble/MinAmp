@@ -105,6 +105,8 @@ MinAmp/
 ## More Info
 Version history / change log available here: [CHANGELOG.md](CHANGELOG.md)
 
+You may also be interested in *MinId3* - a small lightweight ID3 tag editor: [https://github.com/metalbabble/MinId3](https://github.com/metalbabble/MinId3)
+
 ## License
 
 MIT
