@@ -221,8 +221,12 @@ async function loadPlaylistMetadata() {
 }
 
 // ── Load a set of paths as the active playlist ────────────────────────────────
+// Bumped on every explicit load so an in-flight restoreState() can tell it has been superseded
+let loadGeneration = 0
+
 async function loadFiles(paths, source) {
   if (paths.length === 0) return
+  loadGeneration++
   state.playlist     = paths.map(makeTrack)
   state.source       = source
   state.currentIndex = 0
@@ -329,9 +333,14 @@ function persistState() {
 
 // ── Restore saved state on launch ─────────────────────────────────────────────
 async function restoreState(saved) {
+  // A file opened from the OS at launch (os-open-file) races with this restore;
+  // if anything was loaded in the meantime, it wins over the saved playlist.
+  const generation = loadGeneration
+  const superseded = () => generation !== loadGeneration
+
   if (!saved) {
     // First launch — ask the user what to open
-    setTimeout(() => showOpenMenu(btnOpen), 400)
+    setTimeout(() => { if (!superseded()) showOpenMenu(btnOpen) }, 400)
     return
   }
 
@@ -367,7 +376,7 @@ async function restoreState(saved) {
     files = src.paths
   }
 
-  if (files.length === 0) return
+  if (files.length === 0 || superseded()) return
 
   state.playlist     = files.map(makeTrack)
   state.source       = src
@@ -382,6 +391,7 @@ async function restoreState(saved) {
   // Show track info but don't auto-play
   const track = state.playlist[state.currentIndex]
   await ensureMetadata(track)
+  if (superseded()) return
   updateNowPlaying(track)
   audio.src = fileUrl(track.path)   // prime the audio element
   updatePlaylistHighlight()

@@ -5,6 +5,11 @@ Increment the patch version in `package.json` with every change (e.g. `0.1.0` �
 
 ---
 
+## [0.1.7] — 2026-11-13
+
+- Fixed opening a file from the OS (double-click / file association) while MinAmp isn't running: the previously saved playlist could finish restoring after the opened file and replace it
+- Fixed macOS: a file opened while the window was still loading could be dropped instead of queued
+
 ## [0.1.6] — 2026-04-10
 
 - macOS: closing the main window now quits the app instead of leaving it running in the Dock

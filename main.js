@@ -8,7 +8,8 @@ const WINDOW_WIDTH = 420
 
 let win
 let mmParseFile = null
-let pendingOpenPaths = []  // queued before window is ready
+let pendingOpenPaths = []  // queued before the renderer is ready
+let rendererReady = false  // true once the page has loaded and can receive IPC
 
 async function getParseFile() {
   if (!mmParseFile) {
@@ -87,6 +88,7 @@ app.whenReady().then(() => {
   globalShortcut.register('MediaPreviousTrack', () => win.webContents.send('media-key', 'previous'))
 
   win.webContents.on('did-finish-load', () => {
+    rendererReady = true
     win.webContents.send('initial-state', loadState())
     for (const p of pendingOpenPaths) {
       win.webContents.send('os-open-file', p)
@@ -108,10 +110,10 @@ app.on('activate', () => {
 // macOS: file/folder opened via Finder / dock drop
 app.on('open-file', (event, filePath) => {
   event.preventDefault()
-  if (win) {
+  if (win && rendererReady) {
     win.webContents.send('os-open-file', filePath)
   } else {
-    pendingOpenPaths.push(filePath)  // app not ready yet; deliver after window loads
+    pendingOpenPaths.push(filePath)  // renderer not ready yet; deliver after window loads
   }
 })
 
