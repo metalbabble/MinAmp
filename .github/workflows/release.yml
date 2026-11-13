@@ -16,10 +16,10 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
-      - run: npx electron-builder --mac --arm64
+      - run: npx electron-builder --mac --arm64 --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npx electron-builder --mac --x64
+      - run: npx electron-builder --mac --x64 --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
@@ -37,7 +37,7 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
-      - run: npm run build:win
+      - run: npm run build:win -- --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
-      - run: npm run build:linux:all
+      - run: npm run build:linux:all -- --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
@@ -77,10 +77,17 @@ jobs:
         with:
           files: dist/**
           body: |
-            ## Download MinAmp
+            # Download MinAmp
+
+            MinAmp is available for Mac, Linux, and Windows. Review the list below to select the version appropriate for your system...
+
             - macOS w/Apple Silicon use: MinAmp-x.x.x-arm64.dmg
             - macOS w/Intel use: MinAmp-x.x.x.dmg
             - Linux on x86 use: MinAmp-x.x.x.AppImage
             - Linux on ARM use: MinAmp-x.x.x-arm64.AppImage
             - Windows x86/64 use: MinAmp.Setup.x.x.x.exe
+
+            ## Note for macOS
+
+            macOS blocks apps from "unverified" developers by default. Review the following documentation for more information on how to manage these settings: [https://support.apple.com/en-us/102445](https://support.apple.com/en-us/102445)
           generate_release_notes: true

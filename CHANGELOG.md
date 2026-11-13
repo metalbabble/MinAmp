@@ -5,6 +5,11 @@ Increment the patch version in `package.json` with every change (e.g. `0.1.0` �
 
 ---
 
+## [0.1.8] — 2026-11-13
+
+- Release workflow: every GitHub release now includes the full download instructions and the macOS "unverified developer" note
+- Release workflow: electron-builder no longer publishes its own draft release (`--publish never`), which was causing the release notes to be dropped
+
 ## [0.1.7] — 2026-11-13
 
 - Fixed opening a file from the OS (double-click / file association) while MinAmp isn't running: the previously saved playlist could finish restoring after the opened file and replace it

@@ -1,6 +1,6 @@
 {
   "name": "minamp",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Lightweight cross-platform MP3 player",
   "author": "metalbabble.com",
   "main": "main.js",
